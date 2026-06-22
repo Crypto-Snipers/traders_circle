@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from 'react';
 import { Phone, Mail, MapPin, Clock } from 'lucide-react';
-import TradersMarathonLogo from "@/app/assets/tm.png";
+import TradersMarathonLogo from "@/app/assets/trader-circle.jpeg";
 
 interface FooterProps {
     scrollToSection: (id: string) => void;
@@ -16,7 +16,7 @@ const Footer: React.FC<FooterProps> = ({ scrollToSection }) => {
             <div className="max-w-6xl mx-auto">
                 <div className="grid md:grid-cols-4 gap-8 mb-8">
                     <div>
-                        <Image src={TradersMarathonLogo} alt="Traders Marathon Logo" width={200} height={100} className="h-12 md:h-12 w-auto mb-2 -ml-4" suppressHydrationWarning />
+                        <Image src={TradersMarathonLogo} alt="Traders Marathon Logo" width={200} height={100} className="h-12 md:h-20 w-auto mb-2 -ml-4" suppressHydrationWarning />
                         <p className="text-gray-400 text-md">Your fast-track to profitable trading in Crypto, Forex & Gold markets.</p>
                     </div>
                     <div>
@@ -41,29 +41,30 @@ const Footer: React.FC<FooterProps> = ({ scrollToSection }) => {
                         <ul className="space-y-2 text-md text-gray-400">
                             <li className="flex items-center gap-2">
                                 <Phone className="w-4 h-4 text-green-500" />
-                                +91 9266400402
+                                +91 7726969864
                             </li>
                             <li className="flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-green-500" />
-                                support@tradecartel.in
+                                support@tradecartel.com
                             </li>
                             <li className="flex items-start gap-2">
                                 <div className="flex items-start gap-2">
                                     <MapPin className="w-4 h-4 text-green-500" />
                                 </div>
-                                LEVIOSA GLOBAL SOLUTIONS PRIVATE LIMITED, Tower A, 8th floor, Baharampur Naya, Sector 61, Gurugram, Ghata, Haryana 122098
+                                Elevana Consultancy Private Limited
+                                8th Floor, Tower A, 8th floor, Baharampur Naya, Sector 61, Gurugram, Ghata, Haryana 122098
                             </li>
                             <li className="flex items-center gap-2">
                                 <Clock className="w-4 h-4 text-green-500" />
-                                Mon-Fri, 11 AM - 7 PM
+                                Mon-Fri, 10 AM - 6 PM
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div className="border-t border-green-500/20 pt-8">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-gray-500 text-md">© 2024 Trade Cartel. All rights reserved.</p>
-                        <div className="flex gap-6 text-md text-gray-500">
+                        <p className="text-gray-500 text-xs">© 2024 Trade Cartel. All rights reserved.</p>
+                        <div className="flex gap-6 text-xs text-gray-500">
                             <Link href="/privacy-policy" className="hover:text-green-500 transition-colors">Privacy Policy</Link>
                             <Link href="/terms-of-service" className="hover:text-green-500 transition-colors">Terms of Service</Link>
                             <Link href="/cancellations-refunds" className="hover:text-green-500 transition-colors">Cancellations & Refunds</Link>
@@ -75,7 +76,7 @@ const Footer: React.FC<FooterProps> = ({ scrollToSection }) => {
                             </Link>
                         </div>
                     </div>
-                    <p className="text-xs text-emerald-700 mt-10 text-center">
+                    <p className="text-[10px] text-emerald-700 mt-10 text-center">
                         Disclaimer: Trading involves risk. Past performance does not guarantee future results. Only trade with capital you can afford to risk.
                     </p>
                 </div>

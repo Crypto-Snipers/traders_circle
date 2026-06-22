@@ -3,7 +3,7 @@
 const getEmailConfig = () => {
   const senderEmail = "support@tradecartel.in";
   const emailPassword = "Manisha@ANG#13";
-  const defaultRecipient = "upadhyaymanisha13@gmail.com";
+  const defaultRecipient = "manisha@elevanaconsultancy.com";
   const smtpServer = "smtpout.secureserver.net";
   const smtpPort = 465;
   const companyName = "Trade Cartel";

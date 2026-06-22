@@ -114,10 +114,10 @@ export default function ShippingPolicy() {
                         <div className="mt-4 p-6 bg-slate-900/50 border border-[#16b67e]/20 rounded-xl">
                             <p className="mb-2">
                                 <strong className="text-white">Email:</strong>{" "}
-                                support@tradecartel.in
+                                support@tradecartel.com
                             </p>
                             <p className="mb-2">
-                                <strong className="text-white">Phone:</strong> +91 9266400402
+                                <strong className="text-white">Phone:</strong> +91 7726969864
                             </p>
                         </div>
                     </section>

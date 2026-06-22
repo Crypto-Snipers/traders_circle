@@ -2,9 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowRight, TrendingUp, BookOpen, Users, Award, DollarSign, Mail, Phone, MapPin, Clock, HousePlus } from 'lucide-react';
+import { Menu, X, ArrowRight, TrendingUp, BookOpen, Users, Award, DollarSign, Mail, Phone, MapPin, Clock, HousePlus, ChevronLeft, ChevronRight } from 'lucide-react';
 import YashSirImg from "./assets/yash_sir_profile.jpg";
-import NiteshSirImg from "./assets/nitesh_sir_profile.jpg";
+import NiteshSirImg from "./assets/hitesh.jpeg";
 import ClassroomImg from "./assets/gallery/1A6A0151.jpg";
 import TeachingPortraitImg from "./assets/gallery/1A6A0150.jpg";
 import Chill from "./assets/gallery/1A6A0193.jpg";
@@ -20,6 +20,8 @@ import PaymentSuccessModal from "./components/PaymentSuccessModal";
 import MobileBanner from "./assets/mobile-banner.jpg";
 import ForexIcon from "./assets/forex.png";
 import Footer from "./components/Footer";
+
+import { Calendar, ChartCandlestick, LockKeyhole, Target, UsersRound, Lightbulb, Zap, Handshake, ChartNoAxesCombined  } from "lucide-react";
 
 
 interface GalleryItemData {
@@ -115,6 +117,51 @@ export default function TradersMarathon() {
   const [paymentDetails, setPaymentDetails] = useState<{ paymentId: string, amount: number } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
+
+  // Mobile Carousel State
+  const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const handlePrev = () => {
+    setCurrentMobileIndex((prev) => (prev === 0 ? galleryData.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentMobileIndex((prev) => (prev === galleryData.length - 1 ? 0 : prev + 1));
+  };
+
+  // Minimum swipe distance in pixels
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
+  };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentMobileIndex((prev) => (prev === galleryData.length - 1 ? 0 : prev + 1));
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [currentMobileIndex]);
+
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -305,14 +352,14 @@ export default function TradersMarathon() {
 
         <div className="relative z-10 w-full max-w-6xl mx-auto mt-26 text-center flex flex-col items-center justify-center">
           {/* Badge */}
-          <div className="inline-block mb-6 px-4 py-2 border border-green-500/30 rounded-full">
-            <span className="bg-linear-to-r from-green-600 to-green-500 bg-clip-text text-transparent text-2xl sm:text-2xl md:text-3xl font-bold">Online</span>
+          <div className="inline-block mb-3 px-4 py-2 border border-green-500/30 rounded-full">
+            <span className="bg-linear-to-r from-green-600 to-green-500 bg-clip-text text-transparent text-2xl sm:text-2xl md:text-3xl font-bold uppercase">Online</span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 leading-tight max-w-4xl">
-            <span className="text-white">
-              Traders Marathon
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight max-w-4xl">
+            <span className="text-white uppercase">
+              Traders' Circle
             </span>
           </h1>
           <div className="mb-4 mt-48 flex items-center gap-2">
@@ -327,7 +374,7 @@ export default function TradersMarathon() {
             </p>
           </div>
           <p className="text-sm sm:text-lg md:text-xl font-medium text-gray-200 mb-8 max-w-3xl mx-auto px-4">
-            Master Crypto, Forex & Gold trading in just 2 weeks. Learn from experts with 5-12+ years of experience and grow your capital from $1,000 to $5,000+
+            Master Crypto, Forex & Gold trading in just 15 days. Learn from experts with 5-12+ years of experience and learn to multiply your capital.
           </p>
 
           {/* CTA Buttons */}
@@ -341,22 +388,27 @@ export default function TradersMarathon() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 w-full px-4">
-            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center">
-              <div className="text-3xl md:text-4xl font-bold text-green-500 mb-2">2</div>
-              <div className="text-md text-gray-400">Weeks Program</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full px-4">
+            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center flex flex-col items-center justify-center group hover:border-green-500/40 transition-all duration-300">
+              <div className="bg-green-500/10 p-3 rounded-xl mb-3 text-green-500 group-hover:scale-110 transition-transform duration-300">
+                <Calendar size={24} />
+              </div>
+              <div className="text-xl md:text-2xl font-bold text-green-500 mb-2">Fifteen</div>
+              <div className="text-md text-gray-400">Days Online Program</div>
             </div>
-            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center">
-              <div className="text-3xl md:text-4xl font-bold text-green-500 mb-2">3</div>
+            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center flex flex-col items-center justify-center group hover:border-green-500/40 transition-all duration-300">
+              <div className="bg-green-500/10 p-3 rounded-xl mb-3 text-green-500 group-hover:scale-110 transition-transform duration-300">
+                <ChartCandlestick size={24} />
+              </div>
+              <div className="text-xl md:text-2xl font-bold text-green-500 mb-2">Three</div>
               <div className="text-md text-gray-400">Markets Covered</div>
             </div>
-            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center">
-              <div className="text-3xl md:text-4xl font-bold text-green-500 mb-2">8</div>
+            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center flex flex-col items-center justify-center group hover:border-green-500/40 transition-all duration-300">
+              <div className="bg-green-500/10 p-3 rounded-xl mb-3 text-green-500 group-hover:scale-110 transition-transform duration-300">
+                <LockKeyhole size={24} />
+              </div>
+              <div className="text-xl md:text-2xl font-bold text-green-500 mb-2">Secret</div>
               <div className="text-md text-gray-400">Strategies Taught</div>
-            </div>
-            <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center">
-              <div className="text-3xl md:text-4xl font-bold text-green-500 mb-2">5x</div>
-              <div className="text-md text-gray-400">Growth Target</div>
             </div>
           </div>
         </div>
@@ -366,35 +418,37 @@ export default function TradersMarathon() {
       <section className="bg-gray-900 py-20 px-4 relative">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">What is <span className="text-green-500">Traders Marathon?</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">What is <span className="text-green-500">Traders' Circle?</span></h2>
             <div className="w-24 h-1 bg-linear-to-r from-green-600 to-green-400 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-center">
-            <div className="bg-linear-to-br from-green-500/5 to-transparent border border-green-500/20 rounded-3xl p-8 md:p-12">
-              <h3 className="text-2xl md:text-3xl font-bold mb-6">Your Fast-Track to Profitable Trading</h3>
+            <div className="bg-linear-to-br from-green-500/5 to-transparent border border-green-500/20 rounded-2xl p-8 md:p-11">
+              <h3 className="text-2xl md:text-3xl font-bold mb-6">
+                The difference between the 99% and the 1% isn't capital. It's <em className="text-green-500">Mentorship</em>.
+              </h3>
               <p className="text-gray-400 mb-6 leading-relaxed">
-                An intensive <span className="text-green-500 font-semibold">2-week trading bootcamp</span> designed for serious traders who want to master Crypto, Forex, and Gold markets.
+                The Traders' Circle is an intensive <span className="text-green-500 font-semibold">15 days trading bootcamp</span> designed for serious traders who want to master Crypto, Forex, and Gold markets.
               </p>
               <p className="text-gray-400 mb-6 leading-relaxed">
                 This isn't just another theory-heavy course—it's a <span className="text-green-500 font-semibold">hands-on, profit-focused program</span> where you'll learn proven strategies and trade alongside experienced mentors in real market conditions.
               </p>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
                 <p className="text-sm text-green-300">
-                  <strong>Our Mission:</strong> Help you grow your trading capital from $1,000 to $5,000+ using professional strategies
+                  <strong>Our Mission:</strong> Help you understand the markets, minimize your losses and help you walk on the path of your profitable journey.
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 hover:border-green-500/40 transition-all">
                 <div className="flex items-start gap-4">
                   <div className="bg-green-500/20 p-3 rounded-xl">
                     <BookOpen className="text-green-500" size={24} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-lg mb-2">2 Week Intensive Learning</h4>
-                    <p className="text-gray-400 text-sm">Master fundamentals and advanced strategies</p>
+                    <h4 className="font-semibold text-lg mb-2">15 Days Intensive Learning!</h4>
+                    <p className="text-gray-400 text-sm">Master technicals, fundamentals and advanced strategies.</p>
                   </div>
                 </div>
               </div>
@@ -405,8 +459,8 @@ export default function TradersMarathon() {
                     <TrendingUp className="text-green-500" size={24} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-lg mb-2">1 Month Live Trading</h4>
-                    <p className="text-gray-400 text-sm">Practice with real money under mentor guidance</p>
+                    <h4 className="font-semibold text-lg mb-2">Live Trading sessions with Mentors!</h4>
+                    <p className="text-gray-400 text-sm">Learn the execution of trades in live market alongside your mentors.</p>
                   </div>
                 </div>
               </div>
@@ -417,8 +471,20 @@ export default function TradersMarathon() {
                     <Users className="text-green-500" size={24} />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-lg mb-2">Lifetime Community Access</h4>
-                    <p className="text-gray-400 text-sm">Join exclusive trader network and ongoing support</p>
+                    <h4 className="font-semibold text-lg mb-2">Lifetime Access to MTF Indicators for Gold & BTC!</h4>
+                    <p className="text-gray-400 text-sm">Get lifetime free access for Indicators worth $500 monthly for <em className="font-bold text-green-500">free!</em>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 hover:border-green-500/40 transition-all">
+                <div className="flex items-start gap-4">
+                  <div className="bg-green-500/20 p-3 rounded-xl">
+                    <Users className="text-green-500" size={24} />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-lg mb-2">3 months Access to 5x VIP Channel!</h4>
+                    <p className="text-gray-400 text-sm">A <em className="font-bold text-green-500">VIP community</em> where mentors and other community members share their market bias and trade setups.</p>
                   </div>
                 </div>
               </div>
@@ -432,15 +498,15 @@ export default function TradersMarathon() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Prerequisites</h2>
-            <p className="text-gray-400 text-lg">What you need before joining</p>
+            <p className="text-gray-400 text-lg">What you must have before entering the bootcamp...</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { title: "Basic Trading Knowledge", desc: "Understanding of support/resistance, candlesticks" },
-              { title: "Minimum Capital", desc: "At least $1,000 for live trading" },
-              { title: "Time Commitment", desc: "8 hours daily for learning and practice" },
-              { title: "Serious Mindset", desc: "Dedication to complete all sessions" }
+              { title: "A Basic Mobile Phone ", desc: "That supports basic trading apps" },
+              { title: "A Functional Laptop ", desc: "To analyse and understand the charts better" },
+              { title: "Learning Attitude", desc: "Carry an open mind to learn and understand new approaches" },
+              { title: "Patience and Disipline", desc: "These are the 2 primary prerequisites to become a trader" }
             ].map((item, idx) => (
               <div key={idx} className="bg-linear-to-br from-green-500/5 to-transparent border border-green-500/20 rounded-2xl p-6 hover:border-green-500/40 transition-all">
                 <div className="text-green-500 font-bold text-2xl mb-3">0{idx + 1}</div>
@@ -458,8 +524,7 @@ export default function TradersMarathon() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Markets <span className="text-green-500">Covered</span></h2>
             <p className="text-gray-400 text-lg mb-2">
-              We cover the most active and profitable markets so you can
-              trade with confidence.
+              We cover the most active, volatile and yet profitable markets - <em className="italic">because that's where the real game lies.</em>
             </p>
             <div className="w-24 h-1 bg-linear-to-r from-green-600 to-green-400 mx-auto rounded-full"></div>
           </div>
@@ -489,7 +554,7 @@ export default function TradersMarathon() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3">Forex</h3>
                 <p className="text-gray-400 mb-4">All major currency pairs and cross pairs</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-8">
                   <span className="px-3 py-1 bg-green-500/20 rounded-full text-xs">EUR/USD</span>
                   <span className="px-3 py-1 bg-green-500/20 rounded-full text-xs">GBP/USD</span>
                   <span className="px-3 py-1 bg-green-500/20 rounded-full text-xs">USD/JPY</span>
@@ -505,7 +570,7 @@ export default function TradersMarathon() {
                 </div>
                 <h3 className="text-2xl font-bold mb-3">Gold</h3>
                 <p className="text-gray-400 mb-4">Spot Gold and Gold Futures trading</p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-8">
                   <span className="px-3 py-1 bg-green-500/20 rounded-full text-xs">XAU/USD</span>
                   <span className="px-3 py-1 bg-green-500/20 rounded-full text-xs">Futures</span>
                 </div>
@@ -520,7 +585,7 @@ export default function TradersMarathon() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">What You'll <span className="text-green-500">Learn</span></h2>
-            <p className="text-gray-400 text-lg">Comprehensive curriculum designed for results</p>
+            <p className="text-gray-400 text-lg">Detailed curriculum designed for beginners as well as well as avid traders...</p>
           </div>
 
           <div className="space-y-6">
@@ -542,17 +607,6 @@ export default function TradersMarathon() {
                   "Smart Money Concepts",
                   "Price Action Mastery",
                   "Institutional Trading Strategies"
-                ]
-              },
-              {
-                title: "Exclusive Mentor Strategies",
-                items: [
-                  "Dow Theory Strategy",
-                  "DJ Zone Strategy",
-                  "Intraday Fibonacci Strategy",
-                  "Sure$hot Strategy",
-                  "Tri$hul Strategy",
-                  "New York Intraday Strategy"
                 ]
               },
               {
@@ -581,24 +635,24 @@ export default function TradersMarathon() {
         </div>
       </section>
 
-      {/* Why This Marathon */}
+      {/* Why This Circle */}
       <section className="py-10 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Why <span className="text-green-500">This Marathon?</span></h2>
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">Why <span className="text-green-500">Traders' Circle?</span></h2>
             <div className="w-24 h-1 bg-linear-to-r from-green-600 to-green-400 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { icon: "🎯", title: "Missed Traders' Villa?", desc: "Get the same world-class training at an affordable price" },
-              { icon: "💡", title: "100% Practical", desc: "No theory overload—just profitable, real-world strategies" },
-              { icon: "⚡", title: "Fast-Track Results", desc: "15 days intensive to accelerate your trading success" },
-              { icon: "🤝", title: "Ongoing Support", desc: "Lifetime access to mentorship and community" },
-              { icon: "🏢", title: "Professional Setup", desc: "ANG Classroom access (11 AM - 7 PM, Mon-Fri)" },
-              { icon: "📈", title: "Proven Track Record", desc: "Success stories from Seasons 1, 2, 3 & 4" },
-              { icon: "🎓", title: "Same Strategies Used by Our Mentors", desc: "Learn same strategies used by our mentors" },
-              { icon: "💲", title: "Risk Management Capital Multiplier", desc: "See how the Risk Management Capital Multiplier helps traders scale smarter, protect capital, and achieve steady long-term growth." }
+              { icon: <Target className="text-green-500"/>, title: "Couldn't afford Traders' Villa?", desc: "Learn from the same mentors, same techniques but jsut at in affordable price." },
+              { icon: <UsersRound className="text-green-500"/>, title: "Missed the Trader's Marathon?", desc: "Location is no longer an issue because  are having it online." },
+              { icon: <Lightbulb className="text-green-500"/>, title: "100% Practical", desc: "No theory overload—just profitable, real-world strategies" },
+              { icon: <Zap className="text-green-500"/>, title: "Fast-Track Results", desc: "15 days intensive to accelerate your trading success" },
+              { icon: <Handshake className="text-green-500"/>, title: "Ongoing Support", desc: "Lifetime access to mentorship and community" },
+              { icon: <ChartNoAxesCombined className="text-green-500"/>, title: "Lifetime access to MTF Indicators", desc: "Get lifetime buy & sell signals in BTC & Gold when the setup is made." },
+              // { icon: "🎓", title: "Same Strategies Used by Our Mentors", desc: "Learn same strategies used by our mentors" },
+              // { icon: "💲", title: "Risk Management Capital Multiplier", desc: "See how the Risk Management Capital Multiplier helps traders scale smarter, protect capital, and achieve steady long-term growth." }
             ].map((item, idx) => (
               <div key={idx} className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 hover:border-green-500/40 transition-all group hover:scale-105">
                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform">{item.icon}</div>
@@ -615,15 +669,15 @@ export default function TradersMarathon() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Exclusive <span className="text-green-500">Perks</span></h2>
-            <p className="text-gray-400 text-lg">Everything you get with enrollment</p>
+            <p className="text-gray-400 text-lg">Everything you will get after being a part of Trader's Circle</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-4">
               {[
-                { icon: <Award className="text-green-500" size={24} />, title: "ANG Classroom Access", desc: "Get full access to our structured ANG Classroom, designed to take you from basics to advanced trading concepts. Experience practical trading with other students and traders at our office." },
+                { icon: <Award className="text-green-500" size={24} />, title: "You Will Get Access To Our Exclusive 5x Trader's Club", desc: "You will get access to our 5x Trader's Club 3 months. Its a VIP community where mentors and other community members share their market bias and trade setups." },
                 { icon: <Users className="text-green-500" size={24} />, title: "Direct Mentorship", desc: "Learn directly from expert traders who guide you step-by-step with personalised support. Resolve doubts instantly and follow a clear roadmap built for your growth." },
-                { icon: <BookOpen className="text-green-500" size={24} />, title: "Lifetime Access", desc: "Enjoy lifetime access to all course materials, updates, and new modules. Revisit lessons anytime so your learning stays relevant as markets evolve." }
+                { icon: <BookOpen className="text-green-500" size={24} />, title: "Lifetime Access to Video Lectures", desc: "Enjoy lifetime access to all video lectures and modules. Revisit lessons anytime so your learning stays relevant as markets evolve." }
               ].map((perk, idx) => (
                 <div key={idx} className="flex items-start gap-4 bg-linear-to-br from-green-500/5 to-transparent border border-green-500/20 rounded-xl p-6 hover:border-green-500/40 transition-all">
                   <div className="bg-green-500/20 p-3 rounded-lg shrink-0">{perk.icon}</div>
@@ -638,7 +692,7 @@ export default function TradersMarathon() {
             <div className="space-y-4">
               {[
                 { icon: <TrendingUp className="text-green-500" size={24} />, title: "Live Trading Sessions", desc: "Join live market sessions where mentors analyse charts, take trades, and explain real-time strategies. Experience practical learning and learn to trade with confidence." },
-                { icon: <HousePlus className="text-green-500" size={24} />, title: "Exclusive Community", desc: "Be part of a private, high-value trader community where learners, experts, and mentors share insights daily. Stay motivated and grow together with like-minded traders." },
+                { icon: <HousePlus className="text-green-500" size={24} />, title: "Access to MTF Indicators", desc: "Get lifetime access for MTF Indicators for Gold & BTC worth $500 monthly for free! That gives buy & sell signals in BTC & Gold whenever the setup is made." },
                 { icon: <DollarSign className="text-green-500" size={24} />, title: "Capital Growth Focus", desc: "Every lesson, strategy, and session is designed with one aim—building your trading capital. Learn practical methods to scale smartly, reduce risks, and grow sustainably." }
               ].map((perk, idx) => (
                 <div key={idx} className="flex items-start gap-4 bg-linear-to-br from-green-500/5 to-transparent border border-green-500/20 rounded-xl p-6 hover:border-green-500/40 transition-all">
@@ -663,32 +717,14 @@ export default function TradersMarathon() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            <div className="group bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-3xl p-8 hover:border-green-500/60 transition-all">
-              <div className="w-64 h-68 bg-linear-to-br from-green-600 to-green-400 rounded-2xl mb-6 flex items-center justify-center text-4xl font-bold">
-                <Image src={NiteshSirImg} alt="Nitesh Choudhary" width={100} height={100} className="w-64 h-68 rounded-2xl border-2 border-green-500/20" suppressHydrationWarning />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Nitesh Choudhary</h3>
-              <div className="text-green-500 font-semibold mb-4">5+ Years of Experience</div>
-              <p className="text-gray-300 mb-4">Specialization: Forex & Crypto Trading</p>
-              <p className="text-sm text-gray-400">
-                Mr. Nitesh Choudhary fondly known as the Wizard of the Forex Market, brings over 5
-                years of hands-on trading experience to Aspire Now Global. Throughout his journey, he
-                has crafted a series of powerful trading strategies — referred to as his “magical spells” —
-                including NC ZONES, Tri$hul, $ureshot, and many more. These strategies have been
-                built, tested, and refined over the years, and are known for delivering consistent
-                results in the Forex market. As a mentor, he is known for his clear, practical
-                teaching style and his ability to simplify even the most complex market
-                concepts.
-              </p>
-            </div>
-
+            
             <div className="group bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-3xl p-8 hover:border-green-500/60 transition-all">
               <div className="w-68 h-68 bg-linear-to-br from-green-600 to-green-400 rounded-2xl mb-6 flex items-center justify-center text-4xl font-bold">
                 <Image src={YashSirImg} alt="Yash Gupta" width={100} height={100} className="w-68 h-68 rounded-2xl border-2 border-green-500/20" suppressHydrationWarning />
               </div>
               <h3 className="text-2xl font-bold mb-2">Yash Gupta</h3>
               <div className="text-green-500 font-semibold mb-4">12+ Years of Experience</div>
-              <p className="text-gray-300 mb-4">Specialization: Crypto & Gold Markets</p>
+              <p className="text-gray-300 mb-4">Specialization: Crypto, Gold & Forex Markets</p>
               <p className="text-sm text-gray-400">
                 With over 10+ years of experience in the Crypto and Financial
                 markets, Yash Gupta has established himself as a leading expert
@@ -699,6 +735,18 @@ export default function TradersMarathon() {
                 commitment to helping others succeed in the fast-paced world
                 of crypto trading has earned him a reputation for delivering
                 results-driven strategies and insights.
+              </p>
+            </div>
+
+            <div className="group bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-3xl p-8 hover:border-green-500/60 transition-all">
+              <div className="w-64 h-68 bg-linear-to-br from-green-600 to-green-400 rounded-2xl mb-6 flex items-center justify-center text-4xl font-bold">
+                <Image src={NiteshSirImg} alt="Nitesh Choudhary" width={200} height={200} className="w-64 h-68 rounded-2xl border-2 border-green-500/20 object-cover" suppressHydrationWarning />
+              </div>
+              <h3 className="text-2xl font-bold mb-2">Hitesh Dadhich</h3>
+              <div className="text-green-500 font-semibold mb-4">5+ Years of Experience</div>
+              <p className="text-gray-300 mb-4">Specialization: Crypto, Gold & Forex Markets</p>
+              <p className="text-sm text-gray-400">
+                With over 5 years of experience in financial markets Hitesh Dadhich has built several strategies, tested and refined the over the years. He is known for his spot on analysis in the Gold and Forex market. As a mentor he has a very practical teaching style, he knows how to simplify even the most complex market concepts.
               </p>
             </div>
           </div>
@@ -739,15 +787,15 @@ export default function TradersMarathon() {
                   {/* Member Count */}
                   <div className="flex items-center justify-center space-x-2 text-gray-400 mb-8">
                     <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
-                    <span><strong className="text-white">50+</strong> Members Online</span>
+                    <span><strong className="text-white">350+</strong> Members Online</span>
                     <span className="w-3 h-3 bg-gray-600 rounded-full"></span>
-                    <span><strong className="text-white">200+</strong> Total Members</span>
+                    <span><strong className="text-white">5000+</strong> Total Members</span>
                   </div>
                 </div>
 
                 {/* Join Button */}
                 <a
-                  href="https://wa.me/message/CUFJQJP3AXP2J1"
+                  href="https://discord.com/channels/1435594387789844492/1437398692058370162"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-6 rounded-lg transition duration-300 ease-in-out transform hover:scale-105 text-center text-lg"
@@ -795,7 +843,7 @@ export default function TradersMarathon() {
       </section>
 
       {/* Profits/Results */}
-      <section className="py-20 px-4 bg-blue-950/40">
+      {/* <section className="py-20 px-4 bg-blue-950/40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Proven <span className="text-green-500">Results</span></h2>
@@ -828,14 +876,14 @@ export default function TradersMarathon() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 px-4">
+      <section id="pricing" className="py-20 px-4 bg-blue-950/40">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Simple <span className="text-green-500">Pricing</span></h2>
-            <p className="text-gray-400">Invest in your trading future</p>
+            <p className="text-gray-400">Invest into a valuable mentorship to create a profitable future in trading</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -843,25 +891,25 @@ export default function TradersMarathon() {
             <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-3xl p-8 hover:border-green-500/60 transition-all">
               <h3 className="text-2xl font-bold mb-6">Program Fee</h3>
               <div className="mb-6">
-                <div className="text-5xl font-bold text-green-500 mb-2">₹50,000</div>
+                <div className="text-5xl font-bold text-green-500 mb-2">₹47,200</div>
                 <p className="text-gray-400">Total Program Investment</p>
               </div>
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-300">Inclusive of all taxes</span>
+                  <span className="text-gray-300">Inclusive of all GST</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-300">Registration: ₹5,000</span>
+                  <span className="text-gray-300">Registration: ₹10,000</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-300">Balance: ₹45,000</span>
+                  <span className="text-gray-300">Balance: ₹37,200</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-300">Before program starts</span>
+                  <span className="text-gray-300">Balance payment to be made within 7 days</span>
                 </div>
               </div>
             </div>
@@ -873,17 +921,17 @@ export default function TradersMarathon() {
                 <div className="flex items-center gap-3 p-4 bg-black/40 rounded-lg border border-green-500/20">
                   <span className="text-2xl">💳</span>
                   <span className="text-gray-300">Credit/Debit Cards</span>
-                  <span className="text-yellow-400 text-xs">*Charges applicable</span>
+                  <span className="text-yellow-400 text-[10px]">*Charges applicable</span>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-black/40 rounded-lg border border-green-500/20">
                   <span className="text-2xl">🏦</span>
                   <span className="text-gray-300">Net Banking</span>
-                  <span className="text-yellow-400 text-xs">*Available</span>
+                  <span className="text-yellow-400 text-[10px]">*Available</span>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-black/40 rounded-lg border border-green-500/20">
                   <span className="text-2xl">📱</span>
                   <span className="text-gray-300">UPI Payment</span>
-                  <span className="text-yellow-400 text-xs">*No charges</span>
+                  <span className="text-yellow-400 text-[10px]">*No charges</span>
                 </div>
                 <div className="flex items-center gap-3 p-4 bg-black/40 rounded-lg border border-green-500/20">
                   <span className="text-2xl">💰</span>
@@ -894,10 +942,14 @@ export default function TradersMarathon() {
           </div>
 
           <div className="text-center mt-12">
-            {/* <p className="text-green-500 font-semibold mb-4">⚠️ Limited Seats Available</p> */}
-            <button onClick={() => setIsPaymentModalOpen(true)} className="bg-linear-to-r from-green-600 to-green-500 px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-green-500/50 transition-all duration-300">
+            <a
+              href="https://forms.gle/fr12ZrgohwAXLDz39"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-linear-to-r from-green-600 to-green-500 px-10 py-4 rounded-full font-semibold text-lg hover:shadow-2xl hover:shadow-green-500/50 transition-all duration-300 cursor-pointer"
+            >
               Register Now
-            </button>
+            </a>
           </div>
         </div>
       </section>
@@ -907,7 +959,7 @@ export default function TradersMarathon() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold mb-4">Ready to <span className="text-green-500">Transform?</span></h2>
-            <p className="text-gray-400">Join Traders Marathon 5.0 and start your journey toward consistent profits</p>
+            <p className="text-gray-400">Join Traders' Circle and start your journey toward consistent profits</p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
@@ -916,7 +968,7 @@ export default function TradersMarathon() {
                 <Phone className="text-green-500" size={28} />
               </div>
               <h3 className="font-semibold text-lg mb-2">Call Us</h3>
-              <p className="text-gray-400 mb-2">+91 9266400402</p>
+              <p className="text-gray-400 mb-2">+91 7726969864</p>
               <p className="text-sm text-gray-500">Available Mon-Fri, 10 AM - 6 PM</p>
             </div>
 
@@ -925,7 +977,7 @@ export default function TradersMarathon() {
                 <Mail className="text-green-500" size={28} />
               </div>
               <h3 className="font-semibold text-lg mb-2">Email Us</h3>
-              <p className="text-gray-400 mb-2">support@tradecartel.in</p>
+              <p className="text-gray-400 mb-2">support@tradecartel.com</p>
               <p className="text-sm text-gray-500">We'll respond within 24 hours</p>
             </div>
 
@@ -934,8 +986,9 @@ export default function TradersMarathon() {
                 <MapPin className="text-green-500" size={28} />
               </div>
               <h3 className="font-semibold text-lg mb-2">Visit Us</h3>
-              <p className="text-gray-400 mb-2">LEVIOSA GLOBAL SOLUTIONS PRIVATE LIMITED, Tower A, 8th floor, Baharampur Naya, Sector 61, Gurugram, Ghata, Haryana 122098</p>
-              <p className="text-sm text-gray-500">11 AM - 7 PM, Mon-Fri</p>
+              <p className="text-gray-400 mb-2">Elevana Consultancy Private Limited
+              8th Floor, Tower A, 8th floor, Baharampur Naya, Sector 61, Gurugram, Ghata, Haryana 122098</p>
+              <p className="text-sm text-gray-500">10 AM - 6 PM, Mon-Fri</p>
             </div>
           </div>
 
@@ -983,12 +1036,76 @@ export default function TradersMarathon() {
           </h1>
 
           {/* Gallery Container */}
-          <div className="overflow-y-auto rounded-lg p-2 bg-white/10">
-            {/* Responsive Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:grid-auto-rows-[200px] lg:grid-flow-row-dense gap-4">
+          <div className="rounded-lg p-2 bg-white/10">
+            {/* Desktop Grid View */}
+            <div className="hidden md:grid grid-cols-2 lg:grid-cols-4 lg:grid-auto-rows-[200px] lg:grid-flow-row-dense gap-4">
               {galleryData.map((item) => (
                 <GalleryItem key={item.id} {...item} />
               ))}
+            </div>
+
+            {/* Mobile Carousel View */}
+            <div 
+              className="md:hidden relative w-full aspect-square sm:aspect-[4/3] overflow-hidden rounded-xl bg-black/40 border border-green-500/20"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
+              <div className="relative w-full h-full">
+                {galleryData.map((item, index) => (
+                  <div
+                    key={item.id}
+                    className={`absolute inset-0 transition-all duration-500 ease-in-out ${
+                      index === currentMobileIndex 
+                        ? "opacity-100 scale-100 z-10" 
+                        : "opacity-0 scale-95 z-0 pointer-events-none"
+                    }`}
+                  >
+                    <img
+                      src={item.imageUrl}
+                      alt={`Gallery Item ${item.id}`}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Shadow overlay at the bottom for aesthetic depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                  </div>
+                ))}
+              </div>
+
+              {/* Prev Button */}
+              <button
+                type="button"
+                onClick={handlePrev}
+                className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-green-500 text-white p-2 rounded-full border border-green-500/30 transition-all active:scale-90 hover:scale-110 shadow-lg cursor-pointer"
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={20} />
+              </button>
+
+              {/* Next Button */}
+              <button
+                type="button"
+                onClick={handleNext}
+                className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-green-500 text-white p-2 rounded-full border border-green-500/30 transition-all active:scale-90 hover:scale-110 shadow-lg cursor-pointer"
+                aria-label="Next image"
+              >
+                <ChevronRight size={20} />
+              </button>
+
+              {/* Indicators */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                {galleryData.map((_, index) => (
+                  <button
+                    type="button"
+                    key={index}
+                    onClick={() => setCurrentMobileIndex(index)}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                      index === currentMobileIndex ? "w-6 bg-green-500 shadow-md shadow-green-500/50" : "w-2 bg-white/40 hover:bg-white/60"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>

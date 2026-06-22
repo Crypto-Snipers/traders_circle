@@ -39,13 +39,14 @@ export default function CancellationsRefunds() {
             <div className="mt-4 p-6 bg-slate-900/50 border border-[#16b67e]/20 rounded-xl">
               <p className="mb-2">
                 <strong className="text-white">Email:</strong>{" "}
-                admissions@aspirenowglobal.com
+                support@tradecartel.com
               </p>
               <p className="mb-2">
-                <strong className="text-white">Phone:</strong> +91 9266400402
+                <strong className="text-white">Phone:</strong> +91 7726969864
               </p>
               <p>
-                <strong className="text-white">Address:</strong> LEVIOSA GLOBAL SOLUTIONS PRIVATE LIMITED, Tower A, 8th floor, Baharampur Naya, Sector 61,
+                <strong className="text-white">Address:</strong> Elevana Consultancy Private Limited,
+                8th Floor, Tower A, 8th floor, Baharampur Naya, Sector 61,
                 Gurugram, Ghata, Haryana 122098
               </p>
             </div>
