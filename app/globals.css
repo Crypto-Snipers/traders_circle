@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  
+  /* Custom green color palette */
+  --color-green-300: #5dd4a8;
+  --color-green-400: #3ac899;
+  --color-green-500: #16b67e;
+  --color-green-600: #12935f;
+  --color-green-700: #0e7048;
+  --color-green-800: #0a4d30;
+  --color-green-900: #073525;
+  --color-green-950: #041f16;
+  
+  --color-emerald-400: #5dd4a8;
+  --color-emerald-500: #3ac899;
+  --color-emerald-600: #16b67e;
+  --color-emerald-700: #12935f;
+  --color-emerald-900: #073525;
+  --color-emerald-950: #041f16;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes shapeMorph {
+  0% {
+    border-radius: 50%;
+    background-color: rgb(220, 38, 38);
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.9), 0 0 20px rgba(220, 38, 38, 0.3);
+  }
+  25% {
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+    background-color: rgb(249, 115, 22);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.8), 0 0 30px rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    background-color: rgb(234, 179, 8);
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.8), 0 0 30px rgba(234, 179, 8, 0.4);
+  }
+  75% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    background-color: rgb(249, 115, 22);
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.8), 0 0 30px rgba(249, 115, 22, 0.4);
+  }
+  100% {
+    border-radius: 50%;
+    background-color: rgb(220, 38, 38);
+    box-shadow: 0 0 10px rgba(220, 38, 38, 0.6), 0 0 20px rgba(220, 38, 38, 0.3);
+  }
+}
+
+.animate-shape-morph {
+  animation: shapeMorph 3s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    color: rgb(247, 9, 5);
+    text-shadow: 0 0 10px rgba(247, 9, 5, 0.5);
+  }
+  50% {
+    color: rgb(5, 21, 247);
+    text-shadow: 0 0 20px rgb(255, 255, 255), 0 0 30px rgb(255, 255, 255);
+  }
+}
+
+.animate-text-pulse {
+  animation: textPulse 2s ease-in-out infinite;
+}
