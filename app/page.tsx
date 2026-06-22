@@ -789,7 +789,7 @@ export default function TradersMarathon() {
                     <span className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>
                     <span><strong className="text-white">350+</strong> Members Online</span>
                     <span className="w-3 h-3 bg-gray-600 rounded-full"></span>
-                    <span><strong className="text-white">5000+</strong> Total Members</span>
+                    <span><strong className="text-white">2000+</strong> Total Members</span>
                   </div>
                 </div>
 
