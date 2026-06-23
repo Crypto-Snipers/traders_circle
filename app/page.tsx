@@ -17,9 +17,11 @@ import TradersMarathonLogo from "./assets/tm.png";
 import ThankYouModal from "./components/ThankYouModal";
 import PaymentModal from "./components/PaymentModal";
 import PaymentSuccessModal from "./components/PaymentSuccessModal";
-import MobileBanner from "./assets/mobile-banner.jpg";
 import ForexIcon from "./assets/forex.png";
 import Footer from "./components/Footer";
+import FeedbackCarousel from "./components/FeedbackCarousel";
+import tradecircle from "@/app/assets/trader-circle-removebg-preview.png"
+// import herobgvideo from ""
 
 import { Calendar, ChartCandlestick, LockKeyhole, Target, UsersRound, Lightbulb, Zap, Handshake, ChartNoAxesCombined  } from "lucide-react";
 
@@ -280,11 +282,11 @@ export default function TradersMarathon() {
           <div className="flex justify-between items-center h-16 md:h-20">
             <div className="shrink-0">
               <Image
-                src={AngLogo}
-                alt="Traders Marathon Logo"
+                src={tradecircle}
+                alt="Traders Circle Logo"
                 width={280}
                 height={100}
-                className="h-6 md:h-8 w-auto"
+                className="h-16 md:h-18 w-auto"
                 suppressHydrationWarning
               />
             </div>
@@ -324,71 +326,81 @@ export default function TradersMarathon() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="py-10 relative min-h-screen flex flex-col items-center justify-center px-4 overflow-hidden bg-cover bg-center bg-no-repeat" suppressHydrationWarning>
+      <section id="home" className="relative min-h-screen flex flex-col bg-black overflow-hidden" suppressHydrationWarning>
 
-        {/* Desktop Banner */}
-        <Image
-          src="/hero_banner_2.jpg"
-          alt="Traders Marathon desktop banner"
-          fill
-          priority
-          sizes="100vw"
-          className="hidden md:block object-cover z-0"
-          suppressHydrationWarning
+        {/* Line grid */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              'linear-gradient(to right, rgba(22,182,126,0.08) 1px, transparent 1px), linear-gradient(to bottom, rgba(22,182,126,0.08) 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }}
         />
 
-        {/* Mobile Banner */}
-        <Image
-          src={MobileBanner}
-          alt="Traders Marathon mobile banner"
-          fill
-          priority
-          sizes="100vw"
-          className="md:hidden object-cover z-0"
-          suppressHydrationWarning
-        />
-        <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/40 to-black"></div>
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-full max-w-4xl h-64 bg-green-600/10 rounded-full blur-2xl"></div>
+        {/* Animated orbs */}
+        <div className="absolute top-1/4 left-[10%] w-80 h-80 bg-green-600/15 rounded-full blur-3xl pointer-events-none animate-float-orb" style={{ animationDuration: '9s', animationDelay: '0s' }} />
+        <div className="absolute top-1/2 right-[8%] w-96 h-96 bg-green-500/10 rounded-full blur-3xl pointer-events-none animate-float-orb" style={{ animationDuration: '13s', animationDelay: '-4s' }} />
+        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-green-600/10 rounded-full blur-3xl pointer-events-none animate-float-orb" style={{ animationDuration: '11s', animationDelay: '-7s' }} />
+        <div className="absolute top-[15%] right-[30%] w-48 h-48 bg-green-400/8 rounded-full blur-2xl pointer-events-none animate-float-orb" style={{ animationDuration: '15s', animationDelay: '-2s' }} />
 
-        <div className="relative z-10 w-full max-w-6xl mx-auto mt-26 text-center flex flex-col items-center justify-center">
-          {/* Badge */}
-          <div className="inline-block mb-3 px-4 py-2 border border-green-500/30 rounded-full">
-            <span className="bg-linear-to-r from-green-600 to-green-500 bg-clip-text text-transparent text-2xl sm:text-2xl md:text-3xl font-bold uppercase">Online</span>
+        <div className="relative z-10 w-full max-w-6xl mx-auto px-4 flex flex-col flex-1 pt-24 pb-12">
+
+          {/* Two-column layout */}
+          <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 flex-1 py-10">
+
+            {/* Left: Text + Buttons */}
+            <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left">
+              <div className="inline-block mb-4 px-4 py-2 border border-green-500 rounded-full">
+                <span className="text-green-400 text-lg md:text-lg font-bold uppercase">Online</span>
+              </div>
+
+              <div className="relative mb-6">
+                {/* Glow blob behind text */}
+                <div className="absolute inset-0 -z-10 translate-y-4 scale-110 blur-2xl opacity-60 bg-green-500/40 rounded-full pointer-events-none" />
+                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl font-medium leading-tight">
+                  <span className="text-white uppercase [text-shadow:0_2px_8px_rgba(0,0,0,0.9)]">Traders'<em className="text-green-500">Circle</em></span>
+                </h1>
+              </div>
+
+              <div className="mb-4 flex items-center gap-2">
+                <span className="relative flex size-3">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
+                </span>
+                <p className="text-sm md:text-base font-semibold animate-text-pulse">Limited Seats Available</p>
+              </div>
+
+              <p className="text-sm sm:text-base md:text-sm text-gray-300 tracking-wide mb-6 max-w-lg">
+                Master Crypto, Forex & Gold trading in just 15 days. Learn from experts with 7-12+ years of experience and learn to multiply your capital.
+              </p>
+
+              <div className="flex flex-row gap-4 items-center">
+                <button onClick={() => scrollToSection('pricing')} className="bg-linear-to-r from-green-600 to-green-500 px-5 py-3 md:px-4 md:py-3 rounded-xl font-semibold text-sm md:text-lg hover:shadow-2xl hover:shadow-green-500/50 transition-all duration-300 flex items-center gap-2 cursor-pointer">
+                  <span className="text-sm">Enroll Now</span> <ArrowRight size={20} className="hidden md:block" />
+                </button>
+                <button onClick={() => scrollToSection('features')} className="border border-green-500/60 px-5 py-3 md:px-4 md:py-2 rounded-xl font-semibold text-sm md:text-lg hover:bg-green-500/10 transition-all duration-300 cursor-pointer">
+                  <span className="text-sm">Learn More</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Right: Video */}
+            <div className="w-full lg:w-2/2">
+              <video
+                autoPlay
+                loop
+                playsInline
+                className="w-full rounded-2xl border border-green-500 shadow-2xl shadow-green-500/60"
+                suppressHydrationWarning
+              >
+                <source src="https://res.cloudinary.com/dkkah7att/video/upload/v1782195097/hero_bg_video_x2bhjx.mp4" type="video/mp4" />
+              </video>
+            </div>
           </div>
 
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold mb-8 leading-tight max-w-4xl">
-            <span className="text-white uppercase">
-              Traders' Circle
-            </span>
-          </h1>
-          <div className="mb-4 mt-48 flex items-center gap-2">
-            <span className="relative flex size-3">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red-400 opacity-75"></span>
-              <span className="relative inline-flex size-3 rounded-full bg-red-500"></span>
-            </span>
-            <p className="text-sm md:text-xl font-semibold animate-text-pulse">
-              {/* <span className="inline-block w-5 h-5 animate-shape-morph mr-2"></span> */}
-
-              Limited Seats Available
-            </p>
-          </div>
-          <p className="text-sm sm:text-lg md:text-xl font-medium text-gray-200 mb-8 max-w-3xl mx-auto px-4">
-            Master Crypto, Forex & Gold trading in just 15 days. Learn from experts with 5-12+ years of experience and learn to multiply your capital.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-row gap-4 justify-center items-center mb-16 px-4">
-            <button onClick={() => scrollToSection('pricing')} className="w-auto bg-linear-to-r from-green-600 to-green-500 px-5 py-3 md:px-8 md:py-4 rounded-full font-semibold text-sm md:text-lg hover:shadow-2xl hover:shadow-green-500/50 transition-all duration-300 flex items-center justify-center gap-2">
-              Enroll Now <ArrowRight size={20} className="hidden md:block" />
-            </button>
-            <button onClick={() => scrollToSection('features')} className="w-auto border border-green-500/60 px-5 py-3 md:px-8 md:py-4 rounded-full font-semibold text-sm md:text-lg hover:bg-green-500/10 transition-all duration-300">
-              Learn More
-            </button>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full px-4">
+          {/* Stats — centered below */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 w-full">
             <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-2xl p-6 text-center flex flex-col items-center justify-center group hover:border-green-500/40 transition-all duration-300">
               <div className="bg-green-500/10 p-3 rounded-xl mb-3 text-green-500 group-hover:scale-110 transition-transform duration-300">
                 <Calendar size={24} />
@@ -724,7 +736,7 @@ export default function TradersMarathon() {
               </div>
               <h3 className="text-2xl font-bold mb-2">Yash Gupta</h3>
               <div className="text-green-500 font-semibold mb-4">12+ Years of Experience</div>
-              <p className="text-gray-300 mb-4">Specialization: Crypto, Gold & Forex Markets</p>
+              <p className="text-gray-300 font-semibold mb-4">Specialization: Crypto, Gold & Forex Markets</p>
               <p className="text-sm text-gray-400">
                 With over 10+ years of experience in the Crypto and Financial
                 markets, Yash Gupta has established himself as a leading expert
@@ -743,10 +755,10 @@ export default function TradersMarathon() {
                 <Image src={NiteshSirImg} alt="Nitesh Choudhary" width={200} height={200} className="w-64 h-68 rounded-2xl border-2 border-green-500/20 object-cover" suppressHydrationWarning />
               </div>
               <h3 className="text-2xl font-bold mb-2">Hitesh Dadhich</h3>
-              <div className="text-green-500 font-semibold mb-4">5+ Years of Experience</div>
-              <p className="text-gray-300 mb-4">Specialization: Crypto, Gold & Forex Markets</p>
+              <div className="text-green-500 font-semibold mb-4">7+ Years of Experience</div>
+              <p className="text-gray-300 mb-4 font-semibold">Specialization: Crypto, Gold & Forex Markets</p>
               <p className="text-sm text-gray-400">
-                With over 5 years of experience in financial markets Hitesh Dadhich has built several strategies, tested and refined the over the years. He is known for his spot on analysis in the Gold and Forex market. As a mentor he has a very practical teaching style, he knows how to simplify even the most complex market concepts.
+                With over 7 years of experience in financial markets Hitesh Dadhich has built several strategies, tested and refined the over the years. He is known for his spot on analysis in the Gold and Forex market. As a mentor he has a very practical teaching style, he knows how to simplify even the most complex market concepts.
               </p>
             </div>
           </div>
@@ -842,41 +854,8 @@ export default function TradersMarathon() {
         </div>
       </section>
 
-      {/* Profits/Results */}
-      {/* <section className="py-20 px-4 bg-blue-950/40">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">Proven <span className="text-green-500">Results</span></h2>
-            <p className="text-gray-400">Real success stories from previous marathoners</p>
-          </div>
-
-          <div className="bg-linear-to-br from-green-500/10 to-transparent border border-green-500/20 rounded-3xl p-8 md:p-12">
-            <h3 className="text-2xl font-bold mb-6 text-center">Success from Seasons 1, 2, 3 & 4</h3>
-
-            <div className="grid md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-black/40 border border-green-500/30 rounded-xl p-6 text-center">
-                <div className="text-green-500 text-3xl font-bold mb-2">2x</div>
-                <p className="text-gray-400">Capital Doubled</p>
-                <p className="text-xs text-gray-500 mt-2">Within first month</p>
-              </div>
-              <div className="bg-black/40 border border-green-500/30 rounded-xl p-6 text-center">
-                <div className="text-green-500 text-3xl font-bold mb-2">3-4%</div>
-                <p className="text-gray-400">Monthly Returns</p>
-                <p className="text-xs text-gray-500 mt-2">Consistent profits</p>
-              </div>
-              <div className="bg-black/40 border border-green-500/30 rounded-xl p-6 text-center">
-                <div className="text-green-500 text-3xl font-bold mb-2">100+</div>
-                <p className="text-gray-400">Successful Traders</p>
-                <p className="text-xs text-gray-500 mt-2">From all seasons</p>
-              </div>
-            </div>
-
-            <p className="text-center text-gray-400 text-sm">
-              <strong>Disclaimer:</strong> Trading involves risk. Past performance does not guarantee future results. Only trade with capital you can afford to risk.
-            </p>
-          </div>
-        </div>
-      </section> */}
+      {/* Student Feedback Carousel */}
+      <FeedbackCarousel />
 
       {/* Pricing */}
       <section id="pricing" className="py-20 px-4 bg-blue-950/40">

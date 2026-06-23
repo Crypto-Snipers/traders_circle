@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Traders Marathon",
+  title: "Traders' Circle",
   description: "India's Largest Crypto Trading Community",
 };
 
