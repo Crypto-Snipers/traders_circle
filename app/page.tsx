@@ -120,6 +120,13 @@ export default function TradersMarathon() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
 
+  // Hero video carousel
+  const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const heroVideos = [
+    "https://res.cloudinary.com/dkkah7att/video/upload/v1782195097/hero_bg_video_x2bhjx.mp4",
+    "https://res.cloudinary.com/dkkah7att/video/upload/v1782215314/tc_video_2_s5acpk.mp4",
+  ];
+
   // Mobile Carousel State
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -385,19 +392,62 @@ export default function TradersMarathon() {
               </div>
             </div>
 
-            {/* Right: Video */}
-            <div className="w-full lg:w-2/2">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls
-                className="w-full rounded-2xl border border-green-500 shadow-2xl shadow-green-500/60"
-                suppressHydrationWarning
-              >
-                <source src="https://res.cloudinary.com/dkkah7att/video/upload/v1782195097/hero_bg_video_x2bhjx.mp4" type="video/mp4" />
-              </video>
+            {/* Right: Video Carousel */}
+            <div className="w-full lg:w-3/2 flex flex-col gap-3">
+              {/* Video container */}
+              <div className="relative aspect-video rounded-2xl overflow-hidden border border-green-500/60 shadow-xl shadow-green-500/30">
+                {heroVideos.map((src, i) => (
+                  <video
+                    key={src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls={i === activeVideoIndex}
+                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+                      i === activeVideoIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+                    }`}
+                    suppressHydrationWarning
+                  >
+                    <source src={src} type="video/mp4" />
+                  </video>
+                ))}
+
+                {/* Prev arrow */}
+                <button
+                  type="button"
+                  onClick={() => setActiveVideoIndex((prev) => (prev === 0 ? heroVideos.length - 1 : prev - 1))}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-green-500 text-white p-2 rounded-full border border-green-500/30 transition-all duration-300 hover:scale-110 cursor-pointer"
+                  aria-label="Previous video"
+                >
+                  <ChevronLeft size={18} />
+                </button>
+
+                {/* Next arrow */}
+                <button
+                  type="button"
+                  onClick={() => setActiveVideoIndex((prev) => (prev === heroVideos.length - 1 ? 0 : prev + 1))}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-green-500 text-white p-2 rounded-full border border-green-500/30 transition-all duration-300 hover:scale-110 cursor-pointer"
+                  aria-label="Next video"
+                >
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+
+              {/* Dot indicators */}
+              <div className="flex justify-center gap-2">
+                {heroVideos.map((_, i) => (
+                  <button
+                    type="button"
+                    key={i}
+                    onClick={() => setActiveVideoIndex(i)}
+                    aria-label={`Switch to video ${i + 1}`}
+                    className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                      i === activeVideoIndex ? 'w-6 bg-green-500 shadow-md shadow-green-500/50' : 'w-2 bg-white/30 hover:bg-white/50'
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
