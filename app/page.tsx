@@ -389,8 +389,10 @@ export default function TradersMarathon() {
             <div className="w-full lg:w-2/2">
               <video
                 autoPlay
+                muted
                 loop
                 playsInline
+                controls
                 className="w-full rounded-2xl border border-green-500 shadow-2xl shadow-green-500/60"
                 suppressHydrationWarning
               >
