@@ -123,8 +123,8 @@ export default function TradersMarathon() {
   // Hero video carousel
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
   const heroVideos = [
-    "https://res.cloudinary.com/dkkah7att/video/upload/v1782195097/hero_bg_video_x2bhjx.mp4",
-    "https://res.cloudinary.com/dkkah7att/video/upload/v1782215314/tc_video_2_s5acpk.mp4",
+    "https://res.cloudinary.com/dkkah7att/video/upload/v1782284237/hero_bg_video_x2bhjx_rx2rsj.mp4",
+    "https://res.cloudinary.com/dkkah7att/video/upload/v1782284236/tc_video_2_omjqif.mp4",
   ];
 
   // Mobile Carousel State
