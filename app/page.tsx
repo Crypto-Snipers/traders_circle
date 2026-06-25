@@ -126,6 +126,21 @@ export default function TradersMarathon() {
     "https://res.cloudinary.com/dkkah7att/video/upload/v1782284237/hero_bg_video_x2bhjx_rx2rsj.mp4",
     "https://res.cloudinary.com/dkkah7att/video/upload/v1782284236/tc_video_2_omjqif.mp4",
   ];
+  const videoRefs = React.useRef<(HTMLVideoElement | null)[]>([]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === activeVideoIndex) {
+          video.play().catch((err) => {
+            console.warn("Video playback failed/interrupted:", err);
+          });
+        } else {
+          video.pause();
+        }
+      }
+    });
+  }, [activeVideoIndex]);
 
   // Mobile Carousel State
   const [currentMobileIndex, setCurrentMobileIndex] = useState(0);
@@ -399,6 +414,9 @@ export default function TradersMarathon() {
                 {heroVideos.map((src, i) => (
                   <video
                     key={src}
+                    ref={(el) => {
+                      videoRefs.current[i] = el;
+                    }}
                     autoPlay
                     muted
                     loop
